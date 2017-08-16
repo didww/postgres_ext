@@ -14,7 +14,7 @@ module ActiveRecord
                    when Arel::Nodes::TableAlias, NilClass
                    else
                      cache = ActiveRecord::Base.connection.schema_cache
-                     if cache.table_exists? attribute.relation.name
+                     if cache.data_source_exists? attribute.relation.name
                        cache.columns(attribute.relation.name).detect{ |col| col.name.to_s == attribute.name.to_s }
                      end
                    end
@@ -25,7 +25,8 @@ module ActiveRecord
           end
         end
 
-        alias_method_chain(:call, :feature)
+        alias_method :call_without_feature, :call
+        alias_method :call, :call_with_feature
       end
 
       module ClassMethods
