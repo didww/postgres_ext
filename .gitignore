@@ -20,6 +20,7 @@ bin/
 .rbenv-version*
 .ruby-version
 .ruby-gemset
+.byebug_history
 gemfiles/*.lock
 
 spec/dummy/config/database.yml
