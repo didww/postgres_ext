@@ -19,7 +19,7 @@ class Person < ActiveRecord::Base
 
   def self.wicked_people
     includes(:habtm_tags)
-      .where(:tags => {:categories => ['wicked','awesome']})
+      .where(tags: { categories: ['wicked','awesome'] })
   end
 end
 
