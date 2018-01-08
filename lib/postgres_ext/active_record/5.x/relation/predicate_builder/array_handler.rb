@@ -10,18 +10,22 @@ module ActiveRecord
 
       included do
         def call_with_feature(attribute, value)
-          column = case attribute.try(:relation)
-                   when Arel::Nodes::TableAlias, NilClass
-                   else
-                     cache = ActiveRecord::Base.connection.schema_cache
-                     if cache.data_source_exists? attribute.relation.name
-                       cache.columns(attribute.relation.name).detect{ |col| col.name.to_s == attribute.name.to_s }
-                     end
-                   end
+          column = column_from_attribute(attribute)
           if column && column.respond_to?(:array) && column.array
             attribute.eq(value)
           else
             call_without_feature(attribute, value)
+          end
+        end
+
+        private def column_from_attribute(attribute)
+          relation = attribute.try(:relation)
+          return unless relation
+          name = relation.try(:name)
+          return unless name
+          cache = ActiveRecord::Base.connection.schema_cache
+          if cache.data_source_exists? name
+            cache.columns(attribute.relation.name).detect{ |col| col.name.to_s == attribute.name.to_s }
           end
         end
 
