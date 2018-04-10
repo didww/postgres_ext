@@ -77,7 +77,7 @@ describe 'Common Table Expression queries' do
     it 'responds to table_name' do
       people = Person.from_cte('lucky_number_seven', Person.where(lucky_number: 7))
 
-      people.model_name.must_equal 'Person'
+      people.model.model_name.name.must_equal 'Person'
     end
   end
 

@@ -10,7 +10,7 @@ class CTEProxy
            :attribute_alias?,   :aggregate_reflections,   :instantiate,
            :type_for_attribute, :relation_delegate_class, :arel_attribute,
            :primary_key,        :ignored_columns,         :current_scope,
-           :current_scope=,     :has_attribute?,
+           :current_scope=,     :has_attribute?,          :enforce_raw_sql_whitelist,
            to: :@model
 
   def initialize(name, model)

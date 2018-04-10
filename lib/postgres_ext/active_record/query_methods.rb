@@ -2,7 +2,7 @@ require 'postgres_ext/active_record/query_methods/with_chain'
 
 module ActiveRecord
   class Relation
-    def build_arel
+    def build_arel(aliases)
       arel = super
       build_with(arel) if @values[:with]
       build_rank(arel, rank_value) if rank_value
