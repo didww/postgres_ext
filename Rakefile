@@ -34,17 +34,6 @@ end
 
 task :default => :test
 
-namespace :test do
-  desc 'Test against all supported ActiveRecord versions'
-  task :all do
-    # Currently only supports Active Record v4.0
-    %w(4.0.x 4.1.x 4.2.x).each do |version|
-      sh "BUNDLE_GEMFILE='gemfiles/Gemfile.activerecord-#{version}' bundle install --quiet"
-      sh "BUNDLE_GEMFILE='gemfiles/Gemfile.activerecord-#{version}' bundle exec rake test"
-    end
-  end
-end
-
 task :setup do
   if File.exist?('.env')
     puts 'This will overwrite your existing .env file'
@@ -93,14 +82,11 @@ namespace :db do
   task :migrate => :load_db_settings do
     ActiveRecord::Base.establish_connection
 
-    ActiveRecord::Base.connection.enable_extension 'hstore'
-
     ActiveRecord::Base.connection.create_table :people, force: true do |t|
       t.inet     "ip"
       t.cidr     "subnet"
       t.integer  "tag_ids",      array: true
-      t.string   "tags",         array: true
-      t.hstore   "data"
+      t.string   "my_tags",      array: true
       t.integer  "lucky_number"
       t.datetime "created_at"
       t.datetime "updated_at"

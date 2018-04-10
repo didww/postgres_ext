@@ -1,3 +1,9 @@
+## 4.0.0
+
+ * Support Rails 5 - Andy Andrea
+ * Remove Rails 4 support - Andy Andrea
+ * Remove functionality unrelated to CTEs - Andy Andrea
+
 ## 3.0.0
 
  * Fixes merging queries with CTE - chitux

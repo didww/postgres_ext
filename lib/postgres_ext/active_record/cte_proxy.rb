@@ -3,8 +3,15 @@ class CTEProxy
   include ActiveRecord::Sanitization::ClassMethods
   include ActiveRecord::Reflection::ClassMethods
 
-  attr_accessor :reflections, :current_scope
+  attr_accessor :reflections
   attr_reader :connection, :arel_table
+
+  delegate :column_names,       :columns_hash,            :model_name,
+           :attribute_alias?,   :aggregate_reflections,   :instantiate,
+           :type_for_attribute, :relation_delegate_class, :arel_attribute,
+           :primary_key,        :ignored_columns,         :current_scope,
+           :current_scope=,     :has_attribute?,
+           to: :@model
 
   def initialize(name, model)
     @name = name
@@ -21,9 +28,6 @@ class CTEProxy
   def table_name
     name
   end
-
-  delegate :column_names, :columns_hash, :model_name, :primary_key, :attribute_alias?,
-    :aggregate_reflections, :instantiate, :type_for_attribute, :relation_delegate_class, to: :@model
 
   private
 
