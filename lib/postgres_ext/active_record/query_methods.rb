@@ -51,7 +51,7 @@ module ActiveRecord
               select = Arel::Nodes::SqlLiteral.new "(#{expression.to_sql})"
             end
             Arel::Nodes::As.new(
-              Arel::Nodes::SqlLiteral.new(PG::Connection.quote_ident(name.to_s)),
+              Arel::Nodes::SqlLiteral.new(name.to_s),
               select
             )
           end
